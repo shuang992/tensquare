@@ -3,6 +3,7 @@ package com.tensquare.base.controller;
 import com.tensquare.base.domain.Lable;
 import com.tensquare.base.service.LableService;
 import entity.Result;
+import entity.StatusCode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -24,7 +25,7 @@ public class LableController {
    @PostMapping("")
    public Result save(@RequestBody Lable lable){
       lableService.save(lable);
-      return  new Result(true,2000,"增加成功");
+      return  new Result(true, StatusCode.OK,"增加成功");
    }
 
     /**
@@ -35,8 +36,19 @@ public class LableController {
   @GetMapping("")
     public Result findAll(){
       List<Lable> all = lableService.findAll();
-       return new Result(true,2000,"查询成功",all);
+       return new Result(true,StatusCode.OK,"查询成功",all);
   }
+    /**
+     * 查询单个ID的结果
+     * @param
+     * @return
+     */
+    @GetMapping("/{lableId}")
+    public Result findOne(@PathVariable("lableId") String lableIdx){
+        int i=1/0;
+        Lable lableOne = lableService.findOne(lableIdx);
+        return new Result(true,StatusCode.OK,"查询成功",lableOne);
+    }
     /**
      * 修改更新
      */
@@ -44,7 +56,7 @@ public class LableController {
   public Result  update(@PathVariable String lableId ,@RequestBody Lable  lable){
     lable.setId(lableId);
     lableService.update(lable);
-      return new Result(true,2000,"修改成功");
+      return new Result(true,StatusCode.OK,"修改成功");
   }
     /**
      * 删除指定id
@@ -53,6 +65,6 @@ public class LableController {
     @DeleteMapping("/{lableId}")
     public Result deleteLable(@PathVariable String lableId){
         lableService.deleteById(lableId);
-        return new Result(true,2000,"删除成功");
+        return new Result(true,StatusCode.OK,"删除成功");
     }
 }
