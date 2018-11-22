@@ -8,16 +8,25 @@ import java.io.Serializable;
 @Entity
 @Table(name = "tb_label")
 public class Lable implements Serializable {
-     @Id
-     private String id;// '标签ID',
-     private String labelname;// '标签名称',
-     private String  state ;//'状态',
-     private Long count;// '使用数量',
-     private String recommend;//'是否推荐',
-     private Long fans;// '粉丝数',
+    @Id
+ private String id;// '标签ID',
+ private String labelname;// '标签名称',
+ private String  state ;//'状态',
+ private Long count;// '使用数量',
+ private String recommend;//'是否推荐',
+ private Long fans;// '粉丝数',
 
     public String getId() {
         return id;
+    }
+
+    public Lable(String id, String labelname, String state, Long count, String recommend, Long fans) {
+        this.id = id;
+        this.labelname = labelname;
+        this.state = state;
+        this.count = count;
+        this.recommend = recommend;
+        this.fans = fans;
     }
 
     public void setId(String id) {

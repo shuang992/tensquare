@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/lable")
@@ -66,5 +67,10 @@ public class LableController {
     public Result deleteLable(@PathVariable String lableId){
         lableService.deleteById(lableId);
         return new Result(true,StatusCode.OK,"删除成功");
+    }
+    @PostMapping("/search")
+    public Result search(@RequestBody Map map){
+        List<Lable> lables=lableService.search(map);
+        return  new Result(true,StatusCode.OK,"查询成功",lables);
     }
 }
