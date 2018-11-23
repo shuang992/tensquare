@@ -2,11 +2,17 @@ package com.tensquare.base.controller;
 
 import com.tensquare.base.domain.Lable;
 import com.tensquare.base.service.LableService;
+import entity.PageResult;
 import entity.Result;
 import entity.StatusCode;
+import org.hibernate.transform.TupleSubsetResultTransformer;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+
 
 import java.util.List;
 import java.util.Map;
@@ -46,7 +52,7 @@ public class LableController {
      */
     @GetMapping("/{lableId}")
     public Result findOne(@PathVariable("lableId") String lableIdx){
-        int i=1/0;
+        //int i=1/0;
         Lable lableOne = lableService.findOne(lableIdx);
         return new Result(true,StatusCode.OK,"查询成功",lableOne);
     }
@@ -72,5 +78,16 @@ public class LableController {
     public Result search(@RequestBody Map map){
         List<Lable> lables=lableService.search(map);
         return  new Result(true,StatusCode.OK,"查询成功",lables);
+    }
+    @PostMapping("/search/{page}/{size}")
+    public Result search(@PathVariable int page,@PathVariable int size,@RequestBody Map map){
+        //封装当前页,页面大小
+        Pageable pageable= PageRequest.of(page-1,size);
+        //page对象中查询到总记录数,当前页记录
+        Page pageData=lableService.search(map,pageable);
+        System.out.println("---------------"+pageData.getTotalElements());
+        System.out.println("---------------"+pageData.getContent());
+        PageResult<Lable> pageResult=new PageResult<>(pageData.getTotalElements(),pageData.getContent());
+        return new Result(true,StatusCode.OK,"查询成功",pageResult);
     }
 }

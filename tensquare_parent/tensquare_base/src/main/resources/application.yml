@@ -5,7 +5,7 @@ spring:
   name: tensquare-base #微服务名称将来通过springcloud统一管理时要用到,名称不能写下划线
  datasource:
    driver-class-name: com.mysql.jdbc.Driver
-   url: jdbc:mysql://192.168.56.130:3306/tensquare_base?characterEncoding=UTF8 #避免乱码
+   url: jdbc:mysql://192.168.56.132:3306/tensquare_base?characterEncoding=UTF8 #避免乱码
    username: root
    password: 123456
  jpa:

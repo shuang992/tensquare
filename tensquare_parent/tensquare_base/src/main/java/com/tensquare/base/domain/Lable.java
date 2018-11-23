@@ -16,6 +16,9 @@ public class Lable implements Serializable {
  private String recommend;//'是否推荐',
  private Long fans;// '粉丝数',
 
+    public Lable() {
+    }
+
     public String getId() {
         return id;
     }
