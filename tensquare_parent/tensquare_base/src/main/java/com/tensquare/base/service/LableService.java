@@ -74,7 +74,7 @@ public class LableService {
                 String labelname = (String) map.get("labelname");
                 if (StringUtils.isNotBlank(labelname)){
                     //p1:查询实体中的属性;p2:查询具体值
-                    Predicate p1 = criteriaBuilder.like(root.get("labelname").as(String.class),labelname);
+                    Predicate p1 = criteriaBuilder.like(root.get("labelname").as(String.class),"%"+labelname+"%");
                     list.add(p1);
                 }
                 String state = (String) map.get("state");
