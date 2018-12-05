@@ -1,5 +1,6 @@
 package com.tensquare.qa.service;
-
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -153,5 +154,26 @@ public class ProblemService {
 		};
 
 	}
+	/**
+	 * 热门问题
+	 */
 
+    public Page findHotlist(String labelId, Pageable pageable) {
+        return problemDao.findHotList(labelId, pageable);
+    }
+
+
+	/**
+	 * 最新问题
+	 */
+    public Page findNewlist(String labelId, Pageable pageable) {
+        return problemDao.findNewList(labelId, pageable);
+    }
+
+    /**
+     * 等待回答问题
+     */
+    public Page findWaitlist(String labelId, Pageable pageable) {
+        return problemDao.findWaitList(labelId, pageable);
+    }
 }

@@ -4,12 +4,9 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.web.bind.annotation.*;
 
 import com.tensquare.qa.pojo.Problem;
 import com.tensquare.qa.service.ProblemService;
@@ -104,5 +101,35 @@ public class ProblemController {
 		problemService.deleteById(id);
 		return new Result(true,StatusCode.OK,"删除成功");
 	}
-	
+	/**
+	 * 根据标签id查询最新问题列表
+	 * @return
+	 */
+	@GetMapping("/newlist/{label}/{page}/{size}")
+	public Result findNewlist(@PathVariable("label") String labelId, @PathVariable int page, @PathVariable int size){
+		Pageable pageable = PageRequest.of(page-1, size);
+		Page pageData = problemService.findNewlist(labelId, pageable);
+		return new Result(true, StatusCode.OK, "查询成功", new PageResult<Problem>(pageData.getTotalElements(), pageData.getContent()));
+	}
+
+	/**
+	 * 根据标签id查询热门问题列表
+	 * @return
+	 */
+	@GetMapping("/hotlist/{label}/{page}/{size}")
+	public Result findHotlist(@PathVariable("label") String labelId, @PathVariable int page, @PathVariable int size){
+		Pageable pageable = PageRequest.of(page-1, size);
+		Page pageData = problemService.findHotlist(labelId, pageable);
+		return new Result(true, StatusCode.OK, "查询成功", new PageResult<Problem>(pageData.getTotalElements(), pageData.getContent()));
+	}
+	/**
+	 * 根据标签id查询热门问题列表
+	 * @return
+	 */
+	@GetMapping("/waitlist/{label}/{page}/{size}")
+	public Result findWaitlist(@PathVariable("label") String labelId, @PathVariable int page, @PathVariable int size){
+		Pageable pageable = PageRequest.of(page-1, size);
+		Page pageData = problemService.findWaitlist(labelId, pageable);
+		return new Result(true, StatusCode.OK, "查询成功", new PageResult<Problem>(pageData.getTotalElements(), pageData.getContent()));
+	}
 }
