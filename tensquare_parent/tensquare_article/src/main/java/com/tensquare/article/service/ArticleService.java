@@ -1,20 +1,18 @@
 package com.tensquare.article.service;
 
 import java.util.*;
+import java.util.concurrent.TimeUnit;
 
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Expression;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
-import javax.persistence.criteria.Selection;
 
-import com.fasterxml.jackson.annotation.JsonSubTypes;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
 import org.springframework.transaction.annotation.Transactional;
@@ -73,11 +71,19 @@ public class ArticleService {
 
 	/**
 	 * 根据ID查询实体
+     * 先查询redis中有没有 该文章数据,如果有直接返回,没有就查询数据库,将查询将查询结果放到redis中
 	 * @param id
 	 * @return
 	 */
+	@Autowired
+    private RedisTemplate redisTemplate;
 	public Article findById(String id) {
-		return articleDao.findById(id).get();
+		Article article= (Article) redisTemplate.opsForValue().get("acticle_"+id);
+		if (article==null){
+            article=articleDao.findById(id).get();
+            redisTemplate.opsForValue().set("acticle_"+article.getId(),article,10, TimeUnit.SECONDS);
+        }
+	    return article;
 	}
 
 	/**
@@ -94,7 +100,8 @@ public class ArticleService {
 	 * @param article
 	 */
 	public void update(Article article) {
-		articleDao.save(article);
+		redisTemplate.delete("acticle_"+article.getId());
+	    articleDao.save(article);
 	}
 
 	/**
@@ -102,6 +109,7 @@ public class ArticleService {
 	 * @param id
 	 */
 	public void deleteById(String id) {
+        redisTemplate.delete("acticle_"+id);
 		articleDao.deleteById(id);
 	}
 
@@ -178,6 +186,15 @@ public class ArticleService {
      * @param operation 审核通过操作
      * @return
      */
+    @Transactional
+    public boolean examine(String articleId, String operation) {
+        articleDao.examine(articleId, operation);
+        Article article = articleDao.findById(articleId).get();
+        if(article.getExminestate().equals("1")){
+            return true;
+        }
+        return false;
+    }
     /**
      * 点赞
      */
@@ -185,4 +202,6 @@ public class ArticleService {
     public void updateThumbup(String id){
         articleDao.updateThumbup(id);
     }
+
+
 }

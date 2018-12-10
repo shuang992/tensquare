@@ -105,6 +105,15 @@ public class ArticleController {
 	 * @param operation  1 审核通过  0 ：审核不通过
 	 * @return
 	 */
+    @PutMapping("/examine/{articleId}/{operation}")
+    public Result examine(@PathVariable String articleId, @PathVariable String operation){
+        boolean examineState = articleService.examine(articleId, operation);
+        if(examineState){
+            return new Result(true, StatusCode.OK, "审核通过");
+        }else{
+            return new Result(true, StatusCode.OK, "审核失败");
+        }
+    }
 
 
 	/**

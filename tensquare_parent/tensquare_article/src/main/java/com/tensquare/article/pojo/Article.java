@@ -30,13 +30,22 @@ public class Article implements Serializable{
 	private Integer visits;//浏览量
 	private Integer thumbup;//点赞数
 	private Integer comment;//评论数
-	private String state;//审核状态
+	private String state;//审核状态    0:未审核 1:已审核
+	private String exminestate;// 0:审核失败  1:审核成功
 	private String channelid;//所属频道
 	private String url;//URL
 	private String type;//类型
 
-	
-	public String getId() {		
+
+    public String getExminestate() {
+        return exminestate;
+    }
+
+    public void setExminestate(String exminestate) {
+        this.exminestate = exminestate;
+    }
+
+    public String getId() {
 		return id;
 	}
 	public void setId(String id) {
