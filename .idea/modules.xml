@@ -5,9 +5,11 @@
       <module fileurl="file://$PROJECT_DIR$/tensquare_parent/tensquare_article/tensquare_article.iml" filepath="$PROJECT_DIR$/tensquare_parent/tensquare_article/tensquare_article.iml" />
       <module fileurl="file://$PROJECT_DIR$/tensquare_parent/tensquare_base/tensquare_base.iml" filepath="$PROJECT_DIR$/tensquare_parent/tensquare_base/tensquare_base.iml" />
       <module fileurl="file://$PROJECT_DIR$/tensquare_parent/tensquare_common/tensquare_common.iml" filepath="$PROJECT_DIR$/tensquare_parent/tensquare_common/tensquare_common.iml" />
+      <module fileurl="file://$PROJECT_DIR$/tensquare_parent/tensquare_gathering/tensquare_gathering.iml" filepath="$PROJECT_DIR$/tensquare_parent/tensquare_gathering/tensquare_gathering.iml" />
       <module fileurl="file://$PROJECT_DIR$/tensquare_parent/tensquare_parent.iml" filepath="$PROJECT_DIR$/tensquare_parent/tensquare_parent.iml" />
       <module fileurl="file://$PROJECT_DIR$/tensquare_parent/tensquare_qa/tensquare_qa.iml" filepath="$PROJECT_DIR$/tensquare_parent/tensquare_qa/tensquare_qa.iml" />
       <module fileurl="file://$PROJECT_DIR$/tensquare_parent/tensquare_recruit/tensquare_recruit.iml" filepath="$PROJECT_DIR$/tensquare_parent/tensquare_recruit/tensquare_recruit.iml" />
+      <module fileurl="file://$PROJECT_DIR$/tensquare_parent/tensquare_spit/tensquare_spit.iml" filepath="$PROJECT_DIR$/tensquare_parent/tensquare_spit/tensquare_spit.iml" />
     </modules>
   </component>
 </project>
